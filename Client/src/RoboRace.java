@@ -36,7 +36,7 @@ public class RoboRace {
     Socket sock;
     try {
       System.out.println("Client: Cnnecting...");
-      sock = new Socket("139.57.242.31"/*"139.57.242.36"*/, 10997);
+      sock = new Socket(GameDialogs.showInputDialog("Connect to server", "IP Address:"), Integer.parseInt(GameDialogs.showInputDialog("Enter Port Number", "Port Number")));
       Port port = new NetworkPort(sock);
       names = GameDialogs.showInputDialog("Enter Player Name", "Name of Player: ");
       System.out.println("Client: Sending name");

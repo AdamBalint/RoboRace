@@ -27,7 +27,7 @@ public class RoboRace {
       };
       String[] names = new String[nHuman];
       Port[] ports = new Port[nHuman];
-      ServerSocket ssock = new ServerSocket(10997);
+      ServerSocket ssock = new ServerSocket(Integer.parseInt(GameDialogs.showInputDialog("Enter Server Port Number", "Port Number")));
       for (int i = 0; i < nHuman; i++){
         System.out.println("Server waiting for connection");
         ports[i] = new NetworkPort(ssock.accept());
