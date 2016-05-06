@@ -22,7 +22,7 @@ public class NetworkPort implements Port{
     private PrintWriter out = null;
   public NetworkPort(Socket sock){
       try {
-        this.sock = new Socket("localhost", 33333);
+        this.sock = sock;
         InputStream iStream = sock.getInputStream();
         OutputStream oStream = sock.getOutputStream();
         in = new BufferedReader(new InputStreamReader(iStream));
@@ -35,26 +35,35 @@ public class NetworkPort implements Port{
   //server
   @Override
   public void send(String message) {
-    out.println(message);
-    out.println("\0");
+    System.out.println("Server Send: ");
+    System.err.println(message);
+    out.println(message.replaceAll("\n", "") + "\0");
     out.flush();
   }
   //server
+  
+  private String remain = "";
  @Override
   public String recieve() {
-    String tmp = "";
+    String tmp = remain;
       try {
-        while (!tmp.contains("\0")){
+        while (true){
           String tmp2 = in.readLine();
-          if (tmp2.equals("\0"))
+          if (!tmp.contains("\0")){
+            String[] tmp3 = tmp2.split("\0");
+            tmp += tmp3[0];
+            remain = tmp3.length != 2 ? "" : tmp3[1];
             break;
+          }
           tmp += tmp2;
         }
       } catch (IOException ex) {
         System.err.println("Receive error: Socket does not exist");
         Logger.getLogger(NetworkPort.class.getName()).log(Level.SEVERE, null, ex);
       }
-    return tmp.length() == 0 ? null : tmp;
+      System.out.println("Server Receive: ");
+      System.err.println(tmp);
+    return tmp.length() == 0 ? "" : tmp;
   }
 
   @Override

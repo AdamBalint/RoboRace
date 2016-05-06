@@ -27,9 +27,11 @@ public class RoboRace {
       };
       String[] names = new String[nHuman];
       Port[] ports = new Port[nHuman];
-      ServerSocket ssock = new ServerSocket(33333);
+      ServerSocket ssock = new ServerSocket(10997);
       for (int i = 0; i < nHuman; i++){
+        System.out.println("Server waiting for connection");
         ports[i] = new NetworkPort(ssock.accept());
+        System.out.println("Server waiting for name");
         names[i] = ports[i].recieve();
         System.out.println("Player " + names[i] + " joined");
       }

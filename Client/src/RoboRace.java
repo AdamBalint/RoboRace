@@ -35,9 +35,11 @@ public class RoboRace {
     String names;
     Socket sock;
     try {
-      sock = new Socket("localhost"/*"139.57.242.36"*/, 33333);
+      System.out.println("Client: Cnnecting...");
+      sock = new Socket("139.57.242.31"/*"139.57.242.36"*/, 10997);
       Port port = new NetworkPort(sock);
       names = GameDialogs.showInputDialog("Enter Player Name", "Name of Player: ");
+      System.out.println("Client: Sending name");
       port.send(names);
       new Player(names, port);
     } catch (IOException ex) {
