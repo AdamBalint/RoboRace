@@ -28,7 +28,10 @@ public class Player extends JFrame implements Runnable {
 	}
 	
 	public void run() {
-		board = Board.read(new StringReader(port.recieve()));
+    String boards = port.recieve();
+    System.out.println("Board String: " + boards);
+    
+		board = Board.read(new StringReader(boards));
 		boardCanvas = new BoardCanvas(board);
 		cardPane = new CardPane();
 		getContentPane().add("North",boardCanvas);
@@ -54,6 +57,7 @@ public class Player extends JFrame implements Runnable {
 		try {
 			port.close();
 		} catch (Exception e) {};
+    System.exit(0);
 	}
 	
 }
